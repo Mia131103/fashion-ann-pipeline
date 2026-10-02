@@ -1,7 +1,7 @@
 [project]
 name = "fashion-ann-pipeline"
 version = "0.1.0"
-description = "Add your description here"
+description = "Fully-connected ANN classifier for Fashion-MNIST as a modular pipeline"
 readme = "README.md"
 authors = [
     { name = "Samiha Hamid", email = "s.mia131103@gmail.com" }
