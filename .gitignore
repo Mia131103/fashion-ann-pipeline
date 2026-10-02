@@ -13,8 +13,5 @@ wheels/
 .dvc/cache
 *.h5
 
-# Data
-data/
-
 # Submission files
 screenshots/
