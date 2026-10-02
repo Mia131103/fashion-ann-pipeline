@@ -1,0 +1,3 @@
+preprocess:
+  val_split: 0.1  # fraction of the training data held out for validation
+  seed: 42        # RNG seed for the shuffle before splitting
