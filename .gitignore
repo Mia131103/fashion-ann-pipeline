@@ -9,9 +9,5 @@ wheels/
 # Virtual environments
 .venv
 
-# DVC
-.dvc/cache
-*.h5
-
 # Submission files
 screenshots/
