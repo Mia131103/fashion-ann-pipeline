@@ -9,6 +9,10 @@ wheels/
 # Virtual environments
 .venv
 
+# DVC
+.dvc/cache
+*.h5
+
 # Data
 data/
 
