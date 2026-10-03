@@ -1,8 +1,4 @@
 [core]
     remote = gdriveremote
-['remote "gdrive_storage"']
-    url = gdrive://1ngK-GvQZZmEW2jNMASRhXAomcZwGj07z
 ['remote "gdriveremote"']
     url = gdrive://1ngK-GvQZZmEW2jNMASRhXAomcZwGj07z
-    gdrive_client_id = <id>
-    gdrive_client_secret = <secret>
