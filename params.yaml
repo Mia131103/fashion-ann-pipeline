@@ -3,7 +3,7 @@ preprocess:
   seed: 42        # RNG seed for the shuffle before splitting
 
 train:
-  hidden_units: 128     # neurons in the Dense (ReLU) layer
+  hidden_units: 256     # neurons in the Dense (ReLU) layer
   dropout_rate: 0.2     # fraction of units dropped after the hidden layer
   learning_rate: 0.001  # Adam learning rate
   epochs: 10
