@@ -8,9 +8,15 @@ wheels/
 
 # Virtual environments
 .venv
+venv/
 
-# Environment variables
+# Environment variables and credentials
 .env
+.dvc/config.local
+client_secret*.json
+*credentials*.json
 
-# Models
+# DVC-managed artifacts (tracked through dvc.lock, not Git)
 /models
+*.h5
+.dvc/cache/
