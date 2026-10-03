@@ -8,13 +8,9 @@ authors = [
 ]
 requires-python = ">=3.14"
 dependencies = [
-    # Pinned for `dvc push` to Google Drive: pydrive2 caps pyOpenSSL at
-    # <=24.2.1 but leaves cryptography unbounded, so the resolver paired
-    # cryptography 50 with pyOpenSSL 22.0.0, which crashes on import
-    # ("module 'lib' has no attribute 'GEN_EMAIL'"). Remove this pin once
-    # pydrive2 supports a newer pyOpenSSL.
     "cryptography<44",
-    "dvc[gdrive]>=3.67.1",
+    "dvc>=3.67.1",
+    "dvc-gdrive>=3.0.1",
     "matplotlib>=3.11.2",
     "pyyaml>=6.0.3",
     "scikit-learn>=1.9.1",
