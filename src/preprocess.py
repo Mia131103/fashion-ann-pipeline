@@ -1,8 +1,8 @@
 """Normalize the raw images and split off a validation set.
 
-Reads data/raw/ and writes the train, val and test splits to
-data/processed/. Hyperparameters come from the `preprocess` section
-of params.yaml.
+Pixels are rescaled to [-1, 1]. Reads data/raw/ and writes the train,
+val and test splits to data/processed/. Hyperparameters come from the
+`preprocess` section of params.yaml.
 """
 
 import argparse
@@ -29,8 +29,8 @@ def load_raw(name: str) -> tuple[np.ndarray, np.ndarray]:
 
 
 def normalize(images: np.ndarray) -> np.ndarray:
-    """Scale uint8 pixel values from [0, 255] to float32 in [0, 1]."""
-    return images.astype(np.float32) / 255.0
+    """Scale uint8 pixel values from [0, 255] to float32 in [-1, 1]."""
+    return images.astype(np.float32) / 127.5 - 1.0
 
 
 def save(name: str, images: np.ndarray, labels: np.ndarray) -> None:
