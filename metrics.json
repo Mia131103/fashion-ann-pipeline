@@ -1,5 +1,5 @@
 {
-  "test_loss": 0.3560919761657715,
-  "test_accuracy": 0.8805000185966492,
+  "test_loss": 0.3642478287220001,
+  "test_accuracy": 0.8762999773025513,
   "num_test_samples": 10000
 }

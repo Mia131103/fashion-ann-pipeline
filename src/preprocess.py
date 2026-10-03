@@ -1,8 +1,9 @@
 """Normalize the raw images and split off a validation set.
 
-Pixels are rescaled to [-1, 1]. Reads data/raw/ and writes the train,
-val and test splits to data/processed/. Hyperparameters come from the
-`preprocess` section of params.yaml.
+Pixels are scaled to [0, 1] and then standardized to zero mean and unit
+variance using statistics from the training split only. Reads data/raw/
+and writes the train, val and test splits to data/processed/.
+Hyperparameters come from the `preprocess` section of params.yaml.
 """
 
 import argparse
@@ -28,9 +29,14 @@ def load_raw(name: str) -> tuple[np.ndarray, np.ndarray]:
         return data["images"], data["labels"]
 
 
-def normalize(images: np.ndarray) -> np.ndarray:
-    """Scale uint8 pixel values from [0, 255] to float32 in [-1, 1]."""
-    return images.astype(np.float32) / 127.5 - 1.0
+def scale(images: np.ndarray) -> np.ndarray:
+    """Scale uint8 pixel values from [0, 255] to float32 in [0, 1]."""
+    return images.astype(np.float32) / 255.0
+
+
+def standardize(images: np.ndarray, mean: float, std: float) -> np.ndarray:
+    """Shift and scale pixels to zero mean and unit variance."""
+    return ((images - mean) / std).astype(np.float32)
 
 
 def save(name: str, images: np.ndarray, labels: np.ndarray) -> None:
@@ -41,7 +47,7 @@ def save(name: str, images: np.ndarray, labels: np.ndarray) -> None:
 
 
 def main() -> None:
-    """Normalize pixels, hold out a validation set, save all splits."""
+    """Scale pixels, hold out a validation set, standardize, save splits."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--params", type=Path, default=ROOT / "params.yaml")
     args = parser.parse_args()
@@ -49,13 +55,17 @@ def main() -> None:
 
     x_train, y_train = load_raw("train")
     x_test, y_test = load_raw("test")
-    x_train, x_test = normalize(x_train), normalize(x_test)
+    x_train, x_test = scale(x_train), scale(x_test)
 
     # Shuffle first so the validation set is a random sample.
     rng = np.random.default_rng(params["seed"])
     perm = rng.permutation(len(x_train))
     n_val = int(len(x_train) * params["val_split"])
     val_idx, train_idx = perm[:n_val], perm[n_val:]
+
+    # Fit the statistics on the training split only so val and test stay unseen.
+    mean, std = x_train[train_idx].mean(), x_train[train_idx].std()
+    x_train, x_test = standardize(x_train, mean, std), standardize(x_test, mean, std)
 
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
     save("train", x_train[train_idx], y_train[train_idx])
